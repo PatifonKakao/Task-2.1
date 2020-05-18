@@ -6,11 +6,12 @@
 #include <stdexcept>
 
 
+
 float myAbs(float a) {
 	return a >= 0 ? a : -a;
 }
 
-float mySine(float x) {
+float __stdcall mySine(float x) {
 
 	//Cast
 	if (myAbs(x) > 2 * M_PI) {

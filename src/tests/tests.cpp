@@ -22,22 +22,29 @@ TEST(SineTest, constTest) {
 	}
 	else
 	{
-		function mySine = (function)GetProcAddress(hm, "?mySine@@YAMM@Z");
+		function mySine = (function)GetProcAddress(hm, "mySine");
 		if (mySine == NULL)
 		{
 			throw std::runtime_error("Failed to load sin function from sin library");
 		}
 		else
 		{
-			EXPECT_NEAR(sin(0), mySine(0), 1e-4);
-			EXPECT_NEAR(sin(0.5), mySine(0.5), 1e-4);
-			EXPECT_NEAR(sin(1.488), mySine(1.488), 1e-4);
-			EXPECT_NEAR(sin(10), mySine(10), 1e-4);
-			EXPECT_NEAR(sin(100), mySine(100), 1e-4);
-			EXPECT_NEAR(sin(-0.5), mySine(-0.5), 1e-4);
-			EXPECT_NEAR(sin(-1.488), mySine(-1.488), 1e-4);
-			EXPECT_NEAR(sin(-10), mySine(-10), 1e-4);
-			EXPECT_NEAR(sin(-100), mySine(-100), 1e-4);
+			const float *ERR;
+			(FARPROC &)ERR = GetProcAddress(hm, "ERR");
+			if (ERR == NULL)
+			{
+				throw std::runtime_error("Failed to load sin library");
+			}
+
+			EXPECT_NEAR(sin(0), mySine(0), *ERR);
+			EXPECT_NEAR(sin(0.5), mySine(0.5), *ERR);
+			EXPECT_NEAR(sin(1.488), mySine(1.488), *ERR);
+			EXPECT_NEAR(sin(10), mySine(10), *ERR);
+			EXPECT_NEAR(sin(100), mySine(100), *ERR);
+			EXPECT_NEAR(sin(-0.5), mySine(-0.5), *ERR);
+			EXPECT_NEAR(sin(-1.488), mySine(-1.488), *ERR);
+			EXPECT_NEAR(sin(-10), mySine(-10), *ERR);
+			EXPECT_NEAR(sin(-100), mySine(-100), *ERR);
 
 		}
 	}
